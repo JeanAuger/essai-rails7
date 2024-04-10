@@ -6,9 +6,8 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create!(email: 'yshmarov@gmail.com', password: 'yshmarov@gmail.com', password_confirmation: 'yshmarov@gmail.com')
-User.create!(email: 'yashm@outlook.com', password: 'yashm@outlook.com', password_confirmation: 'yashm@outlook.com')
 User.create!(email: 'admin@example.com', password: 'admin@example.com', password_confirmation: 'admin@example.com')
+User.create!(email: 'jeandev', password: 'augerdev', password_confirmation: 'augerdev')
 
 3.times do
   Category.create!([{
@@ -42,11 +41,11 @@ end
   }])
 end
 
-30.times do
-  Subscription.create!([{
-    rating: Faker::Number.between(from: 1, to: 5),
-    comment: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
-    course_id: Faker::Number.between(from: 1, to: 9),
-    user_id: Faker::Number.between(from: 1, to: 3),
-  }])
-end
+# 30.times do
+#   Subscription.create!([{
+#     rating: Faker::Number.between(from: 1, to: 5),
+#     comment: Faker::Lorem.paragraph(sentence_count: 2, supplemental: false, random_sentences_to_add: 4),
+#     course_id: Faker::Number.between(from: 1, to: 9),
+#     user_id: Faker::Number.between(from: 1, to: 3),
+#   }])
+# end
