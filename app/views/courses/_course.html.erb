@@ -1,0 +1,139 @@
+
+<div class="card">
+  <div class="card-header">
+    <i class="fa fa-graduation-cap"></i>
+    <%= link_to course.name, course %>
+  </div>
+
+  <div class="card-body">
+    <p class="small">
+      <%= simple_format(course.short_description) %>
+    </p>
+  </div>
+
+  <div class="card-footer">
+
+    <div class="row">
+      <div class="col-md-6">
+        <span class="text-warning fa fa-star"></span>
+        <b><%= course.average_rating %></b>
+        (<%= course.subscriptions_count %> <span class="fa fa-user-graduate"></span>)
+      </div>
+      <div class="col-md-6 text-right">
+        <i class="fa fa-chalkboard-teacher"></i>
+        <%= link_to course.user.username, user_path(course.user) %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="text-center">
+      <%# logic in courses_helper.rb %>
+      <%= subscription_buttons(course) %>
+      <div class="row">
+        <%= review_buttons(course) %>
+      </div>
+      <%# if course.bought(current_user) == false %>
+      <%#   Bought %>
+      <%# else %>
+      <%#   Buy %>
+    </div>
+  </div>
+
+  <% if current_user %>
+    <% if policy(course).edit? %>
+      <div class="card-footer">
+        <%= link_to 'Add a lesson', new_course_lesson_path(course, @lesson), class: 'btn btn-sm btn-primary' %>
+        <%= link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning' %>
+        <%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger' %>
+      </div>
+    <% end %>
+    
+    <% if policy(course).destroy? %>
+      <div class="card-footer">
+        <% if course.published? %>
+          <span class="badge badge-success">published</span>
+        <% else %>
+          <span class="badge badge-danger">published</span>
+        <% end %>
+        <% if course.approved? %>
+          <span class="badge badge-success">approved</span>
+        <% else %>
+          <span class="badge badge-danger">approved</span>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if policy(course).approve? %>
+      <div class="card-footer">
+        <% if course.approved? %>
+          <%= link_to 'Disapprove', disapprove_course_path(course), method: :patch, class: 'btn btn-sm btn-primary' %>
+        <% else %>
+          <%= link_to 'Approve', approve_course_path(course), method: :patch, class: 'btn btn-sm btn-primary' %>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<%
+=begin%>
+ .card
+  .card-header
+    .fa.fa-graduation-cap
+    = link_to course.name, course
+  .card-body
+    %small= simple_format(course.short_description)
+  .card-footer
+    .row
+      .col-md-6
+        .text-warning.fa.fa-star
+        %b= course.average_rating
+        (#{course.subscriptions_count}
+        .fa.fa-user-graduate
+        )
+  
+      .col-md-6.text-right
+        .fa.fa-chalkboard-teacher
+        = link_to course.user.username, user_path(course.user)
+
+  .card-footer
+    .text-center
+      /logic in courses_helper.rb
+      = subscription_buttons(course)
+      .row
+      = review_buttons(course)
+      /- if course.bought(current_user) == false
+      /  Bought
+      /- else
+      /  Buy
+
+  - if current_user
+    - if policy(course).edit?
+      .card-footer
+        = link_to 'Add a lesson', new_course_lesson_path(course, @lesson), class: 'btn btn-sm btn-primary'
+        = link_to 'Edit', edit_course_path(course), class: 'btn btn-sm btn-warning'
+        = link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-sm btn-danger'
+
+    - if policy(course).destroy?
+      .card-footer
+        - if course.published?
+          .badge.badge-success
+            published
+        - else
+          .badge.badge-danger
+            published
+        - if course.approved?
+          .badge.badge-success
+            approved
+        - else
+          .badge.badge-danger
+            approved
+    - if policy(course).approve?
+      .card-footer
+        - if course.approved?
+          = link_to 'Disapprove', disapprove_course_path(course), method: :patch, class: 'btn btn-sm btn-primary'
+        - else
+          = link_to 'Approve', approve_course_path(course), method: :patch, class: 'btn btn-sm btn-primary' 
+<%
+=end%>

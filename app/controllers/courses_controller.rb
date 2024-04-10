@@ -1,13 +1,23 @@
+require 'fuzzy_match'
+
 class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, :only => [:show]
   before_action :set_course, only: [:show, :edit, :update, :destroy, :approve, :disapprove]
 
   def index
-    if params[:name]
-      @courses = Course.published.approved.where('name LIKE ?', "%#{params[:name]}%") #case-insensitive
-      #@courses = Course.where('name LIKE ?', "%#{params[:name]}%") #case-sensitive
-      #@courses = Course.where('LOWER(name) LIKE LOWER(?)', "%#{params[:name]}%") #make lowercase
+    if params[:name] and !params[:name].blank?
+      logger.debug "Courses.index with valid search filter"
+
+      # STEP 10 -- FuzzyMatch.new creates a matcher obj
+      f_matcher = FuzzyMatch.new(
+        Course.published.approved.all, 
+        :read => :name # matches according to the name fields
+      )
+      # STEP 20 -- find_all gets all matches as opposed to find
+      @courses = f_matcher.find_all(params[:name]) # matches fuzzily course names...
+      logger.debug "TROLL #{@courses}"
     else
+      logger.debug "Courses.index withtout search filter"
       @courses = Course.published.approved.all
     end
   end

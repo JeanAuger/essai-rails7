@@ -29,3 +29,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Pour remplacer du haml par du erb dans les views
+**/old_*
+**/***/.DS_Store

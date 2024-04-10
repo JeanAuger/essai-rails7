@@ -135,6 +135,7 @@ GEM
       sassc (>= 1.11)
     friendly_id (5.2.5)
       activerecord (>= 4.0.0)
+    fuzzy_match (2.1.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
     haml (6.3.0)
@@ -356,6 +357,7 @@ DEPENDENCIES
   faker
   font-awesome-sass (~> 5.11.2)
   friendly_id (~> 5.2.4)
+  fuzzy_match
   haml-rails (~> 2.0)
   jbuilder (>= 2.5)
   jquery-rails

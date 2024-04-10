@@ -3,7 +3,7 @@
     .text-light
       %b 
         .fa.fa-graduation-cap
-        EDURGE
+        EDURGE-Jean
   - if current_user
     %button.navbar-toggler{"aria-controls" => "navbarSupportedContent", "aria-expanded" => "false", "aria-label" => "Toggle navigation", "data-target" => "#navbarSupportedContent", "data-toggle" => "collapse", :type => "button"}
       %span.navbar-toggler-icon
@@ -15,6 +15,7 @@
             .fa.fa-bookmark
             %b Categories
 
+        -# COURSES SEARCH BAR IN NAV HEADER...
         .form-inline.my-2.my-lg-0
           = form_tag(courses_path, method: :get) do
             .input-group
