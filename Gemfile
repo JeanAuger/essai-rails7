@@ -10,11 +10,15 @@ gem 'sass-rails', '>= 5.0'
 gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '>= 4.2'
 gem 'turbolinks', '>= 5'
-gem "turbo-rails" # Pour les turbostreams et renderer des vues partielles
-gem "stimulus-rails" # bis
+
 gem 'jbuilder', '>= 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+gem "importmap-rails"
+
+gem "turbo-rails" # Pour les turbo_streams et faire le render de vues partielles
+gem "stimulus-rails" # bis
 gem 'fuzzy_match' # Pour le fuzzy search
 
 group :development, :test do

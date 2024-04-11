@@ -1,0 +1,5 @@
+<%= turbo_frame_tag "coursesTurboTag" do %>
+    <% @courses.each do |course| %>
+        <%= render 'courses/course', course: course %>
+    <% end %>
+<% end %>

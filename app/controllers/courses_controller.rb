@@ -1,13 +1,15 @@
-require 'fuzzy_match'
-
 class CoursesController < ApplicationController
   skip_before_action :authenticate_user!, :only => [:show]
   before_action :set_course, only: [:show, :edit, :update, :destroy, :approve, :disapprove]
 
   def index
-    if params[:name] and !params[:name].blank?
-      logger.debug "Courses.index with valid search filter"
+    logger.info "#{__FILE__}-index with search filter [#{params[:name]}]"
 
+    if !params[:name] or params[:name].blank?
+      # => RETURN ALL
+      @courses = Course.published.approved.all
+    else
+      # => WE FILTER
       # STEP 10 -- FuzzyMatch.new creates a matcher obj
       f_matcher = FuzzyMatch.new(
         Course.published.approved.all, 
@@ -15,10 +17,20 @@ class CoursesController < ApplicationController
       )
       # STEP 20 -- find_all gets all matches as opposed to find
       @courses = f_matcher.find_all(params[:name]) # matches fuzzily course names...
-      logger.debug "TROLL #{@courses}"
-    else
-      logger.debug "Courses.index withtout search filter"
-      @courses = Course.published.approved.all
+      logger.debug "TROLL filtered #{@courses}"
+    end
+
+    # Turbo_stream -- to update only a specific part of the DOM
+    respond_to do |format|
+      format.html #{ notice: "Filtred with '#{params[:name]}'"}
+      format.turbo_stream {
+
+        render turbo_stream: turbo_stream.replace(
+          'coursesTurboTag', 
+          partial: 'courses', # rerender only the partial for the courses list
+          locals: { courses: @courses }
+        ) 
+      }
     end
   end
 
