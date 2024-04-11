@@ -10,4 +10,5 @@ WORKDIR /app
 COPY Gemfile* /app
 RUN bundle install
 
+# COPY . /app
 CMD rails s -b '0.0.0.0'

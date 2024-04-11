@@ -47,7 +47,7 @@ Admin can view all subscriptions, teacher can view subscriptions to his courses:
 
 * Users can log in +
 
-* Users can browse courses +
+* Users can browse courses with fuzzy-searching that gives results even if all letters are not a 100% match +
 * Users can subscribe to free courses +
 * Users can see the lesson content only of courses that they bought +
 * Users can review and rate courses that they bought +
