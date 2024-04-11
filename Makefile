@@ -9,10 +9,17 @@ help:
 
 
 ### DOCKER
-DK_IMG_NAME = devrb-baseline
-DK_PORT = 3003
+DK_IMG_NAME = devrb-jean
+DK_IMG_NAME_BASELINE = ${DK_IMG_NAME}-baseline
+DK_PORT = 3000
+DK_PORT_BASELINE = 3333
+dk-img-baseline: ## Builds the regular docker image
+	git checkout master
+	docker build . -t ${DK_IMG_NAME_BASELINE}
 dk-img: ## Builds the regular docker image
+	git checkout demojean
 	docker build . -t ${DK_IMG_NAME}
 dk-run: ## Runs a docker container
-	@echo Run the following:
+	@echo Run either of the following:
 	@echo "docker run -it --rm -v ${PWD}:/app -p ${DK_PORT}:3000 ${DK_IMG_NAME}"
+	@echo "docker run -it --rm -v ${PWD}:/app -p ${DK_PORT_BASELINE}:3000 ${DK_IMG_NAME_BASELINE}"

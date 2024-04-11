@@ -1,7 +1,8 @@
 FROM ruby:3.3.0-slim-bookworm
-ARG aptPackages=curl libsqlite3-0 libvips build-essential git pkg-config nodejs
+
+ARG PACKAGES="curl libsqlite3-0 libvips build-essential git pkg-config nodejs"
 RUN apt-get update -qq \
-    && apt-get install --no-install-recommends -y $aptPackages \
+    && apt-get install --no-install-recommends -y $PACKAGES \
     && rm -rf /var/lib/apt/lists /var/cache/apt/archives
 RUN gem install rails 
 
