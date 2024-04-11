@@ -15,7 +15,10 @@ DK_PORT = 3000
 DK_PORT_BASELINE = 3333
 dk-img-baseline: ## Builds the regular docker image
 	git checkout master
+	git checkout demojean Dockerfile
 	docker build . -t ${DK_IMG_NAME_BASELINE}
+	git restore --staged Dockerfile && rm Dockerfile
+	git checkout demojean
 dk-img: ## Builds the regular docker image
 	git checkout demojean
 	docker build . -t ${DK_IMG_NAME}
